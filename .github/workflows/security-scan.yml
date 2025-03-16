@@ -24,17 +24,11 @@ jobs:
           java-version: '17'
 
       - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          args: >
+            -Dsonar.projectKey=artipatil298_devops-security-scan
+            -Dsonar.organization=artipatil298
+            -Dsonar.sources=.
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          curl -fsSL -o sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-          unzip sonar-scanner-cli.zip
-          sudo mv sonar-scanner-5.0.1.3006-linux /opt/sonar-scanner
-          echo "export PATH=$PATH:/opt/sonar-scanner/bin" >> ~/.bashrc
-          source ~/.bashrc
-          sonar-scanner \
-            -Dsonar.projectKey=your_project_key \
-            -Dsonar.organization=your_org \
-            -Dsonar.sources=. \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.token=$SONAR_TOKEN
